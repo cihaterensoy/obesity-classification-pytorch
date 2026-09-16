@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obezite Seviyesi Sınıflandırma ve Tahmin Portalı</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="badge">
+                <span class="pulse-dot"></span>
+                PyTorch Derin Öğrenme Yapay Zekası
+            </div>
+            <h1>Obezite Riski & Sağlık Tahmini</h1>
+            <p>Eğitilmiş derin öğrenme modelimiz ile fiziki ve yaşam tarzı verilerinizi analiz ederek obezite seviyenizi ve kişiselleştirilmiş sağlık değerlendirmelerinizi öğrenin.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Form Section -->
+            <section class="card form-card">
+                <form id="prediction-form">
+                    
+                    <!-- TAB 1: Fiziksel & Demografik Bilgiler -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <span class="icon">👤</span>
+                            <h3>Fiziksel & Demografik Bilgiler</h3>
+                        </div>
+
+                        <div class="grid-2">
+                            <!-- Cinsiyet -->
+                            <div class="form-group">
+                                <label>Cinsiyet</label>
+                                <div class="segmented-control">
+                                    <input type="radio" id="gender-male" name="Gender" value="Male" checked>
+                                    <label for="gender-male">👨 Erkek</label>
+                                    
+                                    <input type="radio" id="gender-female" name="Gender" value="Female">
+                                    <label for="gender-female">👩 Kadın</label>
+                                </div>
+                            </div>
+
+                            <!-- Yaş -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="age">Yaşınız</label>
+                                    <span class="range-val" id="age-val">24</span>
+                                </div>
+                                <input type="range" id="age" name="Age" min="14" max="70" value="24" step="1">
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <!-- Boy -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="height">Boy (cm)</label>
+                                    <span class="range-val" id="height-val">170 cm</span>
+                                </div>
+                                <input type="range" id="height" name="Height" min="140" max="210" value="170" step="1">
+                            </div>
+
+                            <!-- Kilo -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="weight">Kilo (kg)</label>
+                                    <span class="range-val" id="weight-val">70 kg</span>
+                                </div>
+                                <input type="range" id="weight" name="Weight" min="35" max="170" value="70" step="0.5">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: Beslenme Alışkanlıkları -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <span class="icon">🥗</span>
+                            <h3>Beslenme Alışkanlıkları</h3>
+                        </div>
+
+                        <div class="grid-2">
+                            <!-- Yüksek Kalorili Besin Tüketimi (FAVC) -->
+                            <div class="form-group">
+                                <label>Sık Yüksek Kalorili Yiyecek Yiyor musunuz?</label>
+                                <div class="segmented-control">
+                                    <input type="radio" id="favc-no" name="FAVC" value="no">
+                                    <label for="favc-no">Hayır</label>
+                                    
+                                    <input type="radio" id="favc-yes" name="FAVC" value="yes" checked>
+                                    <label for="favc-yes">Evet</label>
+                                </div>
+                            </div>
+
+                            <!-- Öğün Arası Atıştırma (CAEC) -->
+                            <div class="form-group">
+                                <label for="caec">Öğün Aralarında Atıştırma Sıklığı</label>
+                                <select id="caec" name="CAEC" class="custom-select">
+                                    <option value="no">Hiç (Atıştırmam)</option>
+                                    <option value="Sometimes" selected>Bazen</option>
+                                    <option value="Frequently">Sık Sık</option>
+                                    <option value="Always">Her Zaman</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid-3">
+                            <!-- Sebze Yeme Sıklığı (FCVC) -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="fcvc">Sebze Tüketimi</label>
+                                    <span class="range-val" id="fcvc-val">Orta (2)</span>
+                                </div>
+                                <input type="range" id="fcvc" name="FCVC" min="1" max="3" value="2" step="0.1">
+                                <small class="input-hint">1: Nadiren, 2: Orta, 3: Her Öğünde</small>
+                            </div>
+
+                            <!-- Ana Öğün Sayısı (NCP) -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="ncp">Günlük Ana Öğün</label>
+                                    <span class="range-val" id="ncp-val">3 Öğün</span>
+                                </div>
+                                <input type="range" id="ncp" name="NCP" min="1" max="4" value="3" step="1">
+                            </div>
+
+                            <!-- Su Tüketimi (CH2O) -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="ch2o">Günlük Su (Litre)</label>
+                                    <span class="range-val" id="ch2o-val">2.0 L</span>
+                                </div>
+                                <input type="range" id="ch2o" name="CH2O" min="1" max="3" value="2" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: Yaşam Tarzı & Aktivite -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <span class="icon">🏃</span>
+                            <h3>Yaşam Tarzı & Aktivite</h3>
+                        </div>
+
+                        <div class="grid-2">
+                            <!-- Ailede Kilo Geçmişi -->
+                            <div class="form-group">
+                                <label>Ailede Aşırı Kilo Geçmişi Var mı?</label>
+                                <div class="segmented-control">
+                                    <input type="radio" id="fam-no" name="family_history_with_overweight" value="no">
+                                    <label for="fam-no">Yok</label>
+                                    
+                                    <input type="radio" id="fam-yes" name="family_history_with_overweight" value="yes" checked>
+                                    <label for="fam-yes">Var</label>
+                                </div>
+                            </div>
+
+                            <!-- Sigara Kullanımı -->
+                            <div class="form-group">
+                                <label>Sigara Kullanıyor musunuz?</label>
+                                <div class="segmented-control">
+                                    <input type="radio" id="smoke-no" name="SMOKE" value="no" checked>
+                                    <label for="smoke-no">Hayır</label>
+                                    
+                                    <input type="radio" id="smoke-yes" name="SMOKE" value="yes">
+                                    <label for="smoke-yes">Evet</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid-2">
+                            <!-- Kalori Takibi (SCC) -->
+                            <div class="form-group">
+                                <label>Günlük Kalori Takibi Yapıyor musunuz?</label>
+                                <div class="segmented-control">
+                                    <input type="radio" id="scc-no" name="SCC" value="no" checked>
+                                    <label for="scc-no">Hayır</label>
+                                    
+                                    <input type="radio" id="scc-yes" name="SCC" value="yes">
+                                    <label for="scc-yes">Evet</label>
+                                </div>
+                            </div>
+
+                            <!-- Alkol Tüketimi (CALC) -->
+                            <div class="form-group">
+                                <label for="calc">Alkol Tüketim Sıklığı</label>
+                                <select id="calc" name="CALC" class="custom-select">
+                                    <option value="no">Kullanmıyorum</option>
+                                    <option value="Sometimes" selected>Bazen</option>
+                                    <option value="Frequently">Sık Sık</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid-3">
+                            <!-- Fiziksel Aktivite (FAF) -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="faf">Egzersiz / Aktivite</label>
+                                    <span class="range-val" id="faf-val">Haftada 1-2 Gün</span>
+                                </div>
+                                <input type="range" id="faf" name="FAF" min="0" max="3" value="1" step="0.5">
+                                <small class="input-hint">0: Hiç, 1-2: Orta, 3+: Yoğun</small>
+                            </div>
+
+                            <!-- Teknoloji Cihaz Kullanımı (TUE) -->
+                            <div class="form-group">
+                                <div class="label-with-value">
+                                    <label for="tue">Ekran Süresi (Saat)</label>
+                                    <span class="range-val" id="tue-val">1 Saat</span>
+                                </div>
+                                <input type="range" id="tue" name="TUE" min="0" max="2" value="1" step="0.5">
+                            </div>
+
+                            <!-- Ulaşım Türü (MTRANS) -->
+                            <div class="form-group">
+                                <label for="mtrans">Ana Ulaşım Aracı</label>
+                                <select id="mtrans" name="MTRANS" class="custom-select">
+                                    <option value="Public_Transportation" selected>Toplu Taşıma 🚌</option>
+                                    <option value="Automobile">Özel Araba 🚗</option>
+                                    <option value="Walking">Yürüyüş 🚶</option>
+                                    <option value="Motorbike">Motosiklet 🏍️</option>
+                                    <option value="Bike">Bisiklet 🚲</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-btn" class="submit-btn">
+                        <span class="btn-text">🤖 Yapay Zeka Analizini Başlat</span>
+                        <span class="btn-loader" style="display: none;"></span>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-card" class="card results-card" style="display: none;">
+                <div class="results-header">
+                    <h2>Model Tahmini Değerlendirmesi</h2>
+                    <span id="predicted-badge" class="result-badge">Yükleniyor...</span>
+                </div>
+
+                <!-- Primary Result Box -->
+                <div class="prediction-hero">
+                    <div class="predicted-title-box">
+                        <span class="sub">Tahmin Edilen Durum</span>
+                        <h3 id="predicted-class-tr">-</h3>
+                        <p id="predicted-description" class="predicted-desc"></p>
+                    </div>
+                    
+                    <div class="bmi-gauge-box">
+                        <span class="bmi-title">Vücut Kitle İndeksi (VKİ)</span>
+                        <div id="bmi-value" class="bmi-value">--</div>
+                        <span id="bmi-status" class="bmi-status">--</span>
+                    </div>
+                </div>
+
+                <!-- Probability Distribution -->
+                <div class="probabilities-section">
+                    <h4>📊 Tüm Obezite Sınıflarının Olasılık Dağılımı</h4>
+                    <div id="probabilities-container" class="prob-bars-list">
+                        <!-- Dynamic probability bars -->
+                    </div>
+                </div>
+
+                <!-- Personalized Health Insights -->
+                <div class="insights-section">
+                    <h4>💡 Kişiselleştirilmiş Sağlık & Yaşam Tarzı İpuçları</h4>
+                    <div id="insights-container" class="insights-grid">
+                        <!-- Dynamic Insights -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Obezite Sınıflandırma Derin Öğrenme Modeli • PyTorch & Scikit-Learn</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
