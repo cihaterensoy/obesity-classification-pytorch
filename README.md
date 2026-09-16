@@ -50,7 +50,7 @@ Linear(16 → 7) → Logits / Softmax (7 Obezite Sınıfı)
 
 ---
 
-## ✨ Web Uygulaması Özellikleri
+## Web Uygulaması Özellikleri
 
 -  **Modern Koyu Tema & Cam Efekti (Dark Glassmorphic UI)**: Şık görsel tasarım ve akıcı animasyonlar.
 -  **Etkileşimli Form Sürgüleri**: Yaş, boy, kilo, su miktarı ve egzersiz değerleri için anlık birim göstergeleri.
