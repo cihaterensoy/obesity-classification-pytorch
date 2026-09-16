@@ -1,4 +1,4 @@
-# 🏋️ Obezite Seviyesi Sınıflandırma ve Tahmin Portalı
+# Obezite Seviyesi Sınıflandırma ve Tahmin Portalı
 
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Scikit-Learn](https://img.shields.io/badge/scikit_learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
@@ -10,15 +10,15 @@ Bu proje, insanların fiziksel ölçümleri, beslenme alışkanlıkları ve yaş
 
 ---
 
-## 📌 Proje Hakkında
+## Proje Hakkında
 
 Obezite, dünya genelinde yaygınlaşan ciddi bir sağlık sorunudur. Bu çalışmada, Kaggle Obezite Riski veri seti (`train.csv`) kullanılarak 7 farklı obezite seviyesini tahmin eden bir Derin Yapay Sinir Ağı (Deep Neural Network) eğitilmiştir.
 
-Eğitilen PyTorch modeli (`obesity_classifier.pth`), ön işleme boru hattı (`ColumnTransformer`) ve modern web arayüzü entegre edilerek kullanıcı dostu bir web portalına dönüştürülmüştür.
+Eğitilen PyTorch modeli (`obesity_classifier.pth`), ön işleme pipeline (`ColumnTransformer`) ve modern web arayüzü entegre edilerek kullanıcı dostu bir web portalına dönüştürülmüştür.
 
 ---
 
-## 🧠 Model Mimarisi & Ön İşleme
+##  Model Mimarisi & Ön İşleme
 
 ### 1. Ön İşleme Adımları (Preprocessing)
 - **İkili Kategorik Değişkenler (`OrdinalEncoder`)**: `family_history_with_overweight`, `FAVC`, `SMOKE`, `SCC`
@@ -52,15 +52,15 @@ Linear(16 → 7) → Logits / Softmax (7 Obezite Sınıfı)
 
 ## ✨ Web Uygulaması Özellikleri
 
-- 🎨 **Modern Koyu Tema & Cam Efekti (Dark Glassmorphic UI)**: Şık görsel tasarım ve akıcı animasyonlar.
-- 🎛️ **Etkileşimli Form Sürgüleri**: Yaş, boy, kilo, su miktarı ve egzersiz değerleri için anlık birim göstergeleri.
-- 📊 **Animasyonlu Olasılık Dağılımı**: Modelin 7 obezite sınıfı için hesapladığı % olasılık değerlerinin grafik gösterimi.
-- ⚖️ **Vücut Kitle İndeksi (VKİ / BMI)**: Otomatik hesaplama ve durum göstergesi.
-- 💡 **Kişiselleştirilmiş Sağlık Tavsiyeleri**: Kullanıcının su tüketimi, hareket seviyesi ve beslenme tercihlerine özel yaşam tarzı önerileri.
+-  **Modern Koyu Tema & Cam Efekti (Dark Glassmorphic UI)**: Şık görsel tasarım ve akıcı animasyonlar.
+-  **Etkileşimli Form Sürgüleri**: Yaş, boy, kilo, su miktarı ve egzersiz değerleri için anlık birim göstergeleri.
+-  **Animasyonlu Olasılık Dağılımı**: Modelin 7 obezite sınıfı için hesapladığı % olasılık değerlerinin grafik gösterimi.
+-  **Vücut Kitle İndeksi (VKİ / BMI)**: Otomatik hesaplama ve durum göstergesi.
+-  **Kişiselleştirilmiş Sağlık Tavsiyeleri**: Kullanıcının su tüketimi, hareket seviyesi ve beslenme tercihlerine özel yaşam tarzı önerileri.
 
 ---
 
-## 📁 Proje Dosya Yapısı
+## Proje Dosya Yapısı
 
 ```
 .
@@ -80,7 +80,7 @@ Linear(16 → 7) → Logits / Softmax (7 Obezite Sınıfı)
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## Kurulum ve Çalıştırma
 
 ### 1. Depoyu Klonlayın
 ```bash
@@ -105,52 +105,3 @@ http://localhost:5000
 ```
 
 ---
-
-## 🛰️ REST API Kullanımı
-
-### `POST /api/predict`
-
-**Örnek İstek Gövdesi (JSON):**
-```json
-{
-  "Gender": "Male",
-  "Age": 25,
-  "Height": 175,
-  "Weight": 85,
-  "family_history_with_overweight": "yes",
-  "FAVC": "yes",
-  "FCVC": 2,
-  "NCP": 3,
-  "CAEC": "Sometimes",
-  "SMOKE": "no",
-  "CH2O": 2,
-  "SCC": "no",
-  "FAF": 1,
-  "TUE": 1,
-  "CALC": "Sometimes",
-  "MTRANS": "Public_Transportation"
-}
-```
-
-**Örnek Yanıt (JSON):**
-```json
-{
-  "success": true,
-  "predicted_class": "Overweight_Level_II",
-  "predicted_class_tr": "Fazla Kilo Seviye II",
-  "bmi": 27.76,
-  "probabilities": [
-    {"class_code": "Overweight_Level_II", "class_tr": "Fazla Kilo Seviye II", "probability": 70.62},
-    {"class_code": "Overweight_Level_I", "class_tr": "Fazla Kilo Seviye I", "probability": 17.98}
-  ],
-  "insights": [
-    "⚠️ VKİ değeriniz 25 - 29.9 aralığında. Kilo artışını önlemek için günlük hareket miktarınızı artırabilirsiniz."
-  ]
-}
-```
-
----
-
-## 📜 Lisans
-
-Bu proje MIT Lisansı altında sunulmaktadır.
